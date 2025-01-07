@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.services.KafkaConsumerService;
+import org.example.services.consumer.KafkaConsumerFraudeService;
 import org.example.services.KafkaMessageService;
 
 import java.time.LocalDateTime;
@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 public class Main {
 
     private static final KafkaMessageService kafkaMessageService = new KafkaMessageService();
-    private static final KafkaConsumerService kafkaConsumerService = new KafkaConsumerService();
+    private static final KafkaConsumerFraudeService kafkaConsumerService = new KafkaConsumerFraudeService();
 
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {

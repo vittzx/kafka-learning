@@ -1,4 +1,4 @@
-package org.example.services;
+package org.example.services.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -8,16 +8,16 @@ import org.example.utils.KafkaProperties;
 import java.time.Duration;
 import java.util.Collections;
 
-import static org.example.utils.UNIFORM_STRING.TOPPIC_NAME;
+import static org.example.utils.UNIFORM_STRING.FRAUDE_TOPPIC_NAME;
 
-public class KafkaConsumerService {
+public class KafkaConsumerFraudeService {
 
     private final KafkaConsumer<String, String> consumer;
 
-    public KafkaConsumerService(){
+    public KafkaConsumerFraudeService(){
         KafkaProperties kafkaProperties = new KafkaProperties();
         kafkaProperties.createKafkaPropertiesConsumer();
-        kafkaProperties.add_properties(ConsumerConfig.GROUP_ID_CONFIG, KafkaMessageService.class.getSimpleName());
+        kafkaProperties.add_properties(ConsumerConfig.GROUP_ID_CONFIG, KafkaConsumerFraudeService.class.getSimpleName());
         this.consumer = new KafkaConsumer<>(kafkaProperties.getProperties());
     }
 
@@ -62,9 +62,9 @@ public class KafkaConsumerService {
 
 
     public static void main(String[] args){
-        final KafkaConsumerService kafkaConsumerService = new KafkaConsumerService();
+        final KafkaConsumerFraudeService kafkaConsumerService = new KafkaConsumerFraudeService();
         System.out.println("KAFKA CONSUMER CONTROLLER START");
-        kafkaConsumerService.consumerTopic(TOPPIC_NAME);
+        kafkaConsumerService.consumerTopic(FRAUDE_TOPPIC_NAME);
         System.out.println("KAFKA CONSUMER CONTROLLER FINISHED");
     }
 
