@@ -23,11 +23,17 @@ public class KafkaConsumerService {
 
     public void consumerTopic(String topicName){
         System.out.println("STARTING CONSUMER TOPIC " + topicName + " MESSAGES");
-
         consumer.subscribe(Collections.singletonList(topicName));
-        boolean condition = true;
 
-        while(condition) {
+        analizeMessages();
+
+        System.out.println("FINISHING CONSUMER TOPIC " + topicName + " MESSAGES");
+    }
+
+    private void analizeMessages(){
+        boolean condition = true;
+        int count = 0;
+        while (condition) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(5000));
 
             if (records.isEmpty()) {
@@ -37,21 +43,23 @@ public class KafkaConsumerService {
 
             System.out.println("MESSAGE FOUND");
 
-            for(var record: records){
+            for (var record : records) {
                 System.out.println("--------- NEW MESSAGE ---------");
                 System.out.println("MESSAGE: " + record.topic());
                 System.out.println("KEY: " + record.key());
                 System.out.println("VALUE: " + record.value());
                 System.out.println("PARTITION: " + record.partition());
                 System.out.println("OFFSET: " + record.offset());
+                count++;
             }
 
-
-
-            if(records.count() == 3){ condition = false; }
+            // Condição de parada
+            if (count >= 3) {
+                condition = false;
+            }
         }
-        System.out.println("FINISHING CONSUMER TOPIC " + topicName + " MESSAGES");
     }
+
 
     public static void main(String[] args){
         final KafkaConsumerService kafkaConsumerService = new KafkaConsumerService();
@@ -59,6 +67,5 @@ public class KafkaConsumerService {
         kafkaConsumerService.consumerTopic(TOPPIC_NAME);
         System.out.println("KAFKA CONSUMER CONTROLLER FINISHED");
     }
-
 
 }

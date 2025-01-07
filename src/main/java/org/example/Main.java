@@ -20,7 +20,7 @@ public class Main {
 
     public static void sendMessageMain() throws ExecutionException, InterruptedException{
         System.out.println("KAFKA MESSAGE CONTROLLER START");
-        kafkaMessageService.sendMessage("ULTIMA_MESSAGE,PRODUTO_TESTE_15,RS1000.00, " + LocalDateTime.now());
+        kafkaMessageService.sendMessage("MESAGE_007,PRODUTO_TESTE_15,RS1000.00, " + LocalDateTime.now());
         System.out.println("KAFKA MESSAGE CONTROLLER FINISHED");
     }
 
