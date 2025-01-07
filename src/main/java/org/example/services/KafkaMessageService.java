@@ -14,7 +14,8 @@ public class KafkaMessageService {
 
     public KafkaMessageService(){
         KafkaProperties kafkaProperties = new KafkaProperties();
-        this.kafkaProducer = new KafkaProducer<>(kafkaProperties.getKafkaProperties());
+        kafkaProperties.createKafkaPropertiesProducer();
+        this.kafkaProducer = new KafkaProducer<>(kafkaProperties.getProperties());
     }
 
     public void sendMessage(String message) throws ExecutionException, InterruptedException {
