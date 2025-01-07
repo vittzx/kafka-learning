@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteTargetsManager">
+    <targets>
+      <target name="WSL" type="wsl" uuid="9522c68e-b85e-4639-a33d-8f5b63ec8b89">
+        <config>
+          <option name="distributionMsId" value="Ubuntu" />
+        </config>
+        <ContributedStateBase type="MavenRuntime">
+          <config>
+            <option name="homePath" value="/usr/share/maven" />
+            <option name="versionString" value="3.8.7" />
+          </config>
+        </ContributedStateBase>
+      </target>
+    </targets>
+  </component>
+</project>
