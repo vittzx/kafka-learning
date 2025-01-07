@@ -32,7 +32,7 @@ public class KafkaConsumerEmailService {
 
     private void analizeMessages(){
         boolean condition = true;
-        int count = 0;
+        // int count = 0;
         while (condition) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(2500));
 
@@ -50,14 +50,14 @@ public class KafkaConsumerEmailService {
                 System.out.println("VALUE: " + record.value());
                 System.out.println("PARTITION: " + record.partition());
                 System.out.println("OFFSET: " + record.offset());
-                count++;
+                // count++;
                 System.out.println("EMAIL SENT");
             }
 
             // Condição de parada
-            if (count >= 3) {
-                condition = false;
-            }
+            //if (count >= 3) {
+            //    condition = false;
+            //}
         }
     }
 

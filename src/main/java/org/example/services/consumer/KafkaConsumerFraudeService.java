@@ -32,7 +32,7 @@ public class KafkaConsumerFraudeService {
 
     private void analizeMessages(){
         boolean condition = true;
-        int count = 0;
+        // int count = 0;
         while (condition) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(5000));
 
@@ -50,13 +50,12 @@ public class KafkaConsumerFraudeService {
                 System.out.println("VALUE: " + record.value());
                 System.out.println("PARTITION: " + record.partition());
                 System.out.println("OFFSET: " + record.offset());
-                count++;
             }
 
             // Condição de parada
-            if (count >= 3) {
-                condition = false;
-            }
+            // if (count >= 3) {
+            //    condition = false;
+            // }
         }
     }
 
