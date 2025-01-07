@@ -8,7 +8,7 @@ import org.example.utils.KafkaProperties;
 import java.time.Duration;
 import java.util.Collections;
 
-import static org.example.utils.UNIFORM_STRING.FRAUDE_TOPPIC_NAME;
+import static org.example.utils.UNIFORM_STRING.EMAIL_TOPPIC_NAME;
 
 public class KafkaConsumerEmailService {
 
@@ -34,23 +34,24 @@ public class KafkaConsumerEmailService {
         boolean condition = true;
         int count = 0;
         while (condition) {
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(5000));
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(2500));
 
             if (records.isEmpty()) {
-                System.out.println("None message found. Continues");
+                System.out.println("None email message found. Continues");
                 continue;
             }
 
             System.out.println("MESSAGE FOUND");
 
             for (var record : records) {
-                System.out.println("--------- NEW MESSAGE ---------");
+                System.out.println("--------- NEW EMAIL MESSAGE ---------");
                 System.out.println("MESSAGE: " + record.topic());
                 System.out.println("KEY: " + record.key());
                 System.out.println("VALUE: " + record.value());
                 System.out.println("PARTITION: " + record.partition());
                 System.out.println("OFFSET: " + record.offset());
                 count++;
+                System.out.println("EMAIL SENT");
             }
 
             // Condição de parada
@@ -63,9 +64,9 @@ public class KafkaConsumerEmailService {
 
     public static void main(String[] args){
         final KafkaConsumerEmailService kafkaConsumerService = new KafkaConsumerEmailService();
-        System.out.println("KAFKA CONSUMER CONTROLLER START");
-        kafkaConsumerService.consumerTopic(FRAUDE_TOPPIC_NAME);
-        System.out.println("KAFKA CONSUMER CONTROLLER FINISHED");
+        System.out.println("KAFKA CONSUMER EMAIL CONTROLLER START");
+        kafkaConsumerService.consumerTopic(EMAIL_TOPPIC_NAME);
+        System.out.println("KAFKA CONSUMER EMAIL CONTROLLER FINISHED");
     }
 
 }

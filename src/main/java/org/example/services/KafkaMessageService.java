@@ -53,7 +53,7 @@ public class KafkaMessageService {
         System.out.println("STARTING SENDING FRAUDE MESSAGE  TO TOPPIC: " + EMAIL_TOPPIC_NAME + " ,MESSAGE: " + message);
 
         var emailRecord = new ProducerRecord<>(EMAIL_TOPPIC_NAME, message,message);
-        kafkaProducer.send(emailRecord, callback);
+        kafkaProducer.send(emailRecord, callback).get();
 
         System.out.println("FINISHING SENDING FRAUDE MESSAGE  TO TOPPIC: " + EMAIL_TOPPIC_NAME + " ,MESSAGE: " + message);
     }

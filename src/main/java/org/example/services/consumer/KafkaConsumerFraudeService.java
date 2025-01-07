@@ -63,9 +63,9 @@ public class KafkaConsumerFraudeService {
 
     public static void main(String[] args){
         final KafkaConsumerFraudeService kafkaConsumerService = new KafkaConsumerFraudeService();
-        System.out.println("KAFKA CONSUMER CONTROLLER START");
+        System.out.println("KAFKA CONSUMER FRAUDE CONTROLLER START");
         kafkaConsumerService.consumerTopic(FRAUDE_TOPPIC_NAME);
-        System.out.println("KAFKA CONSUMER CONTROLLER FINISHED");
+        System.out.println("KAFKA CONSUMER FRAUDE CONTROLLER FINISHED");
     }
 
 }

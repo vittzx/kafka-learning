@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutionException;
 public class Main {
 
     private static final KafkaMessageService kafkaMessageService = new KafkaMessageService();
-    private static final KafkaConsumerFraudeService kafkaConsumerService = new KafkaConsumerFraudeService();
 
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -20,7 +19,7 @@ public class Main {
 
     public static void sendMessageMain() throws ExecutionException, InterruptedException{
         System.out.println("KAFKA MESSAGE CONTROLLER START");
-        kafkaMessageService.sendMessage("MESAGE_007,PRODUTO_TESTE_15,RS1000.00, " + LocalDateTime.now());
+        kafkaMessageService.sendMessage("MESAGE_01010,PRODUTO_TESTE_15,RS1000.00, " + LocalDateTime.now());
         System.out.println("KAFKA MESSAGE CONTROLLER FINISHED");
     }
 
