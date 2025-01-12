@@ -4,9 +4,8 @@ import java.util.Properties;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import static org.example.utils.UNIFORM_STRING.KAFKA_SERIALIZER_CLASS_CONFIG;
-import static org.example.utils.UNIFORM_STRING.KAFKA_DESERIALIZER_CLASS_CONFIG;
-import static org.example.utils.UNIFORM_STRING.KAFKA_SERVER_PORT;
+
+import static org.example.utils.UNIFORM_STRING.*;
 
 
 public class KafkaProperties {
@@ -19,8 +18,8 @@ public class KafkaProperties {
 
     public void createKafkaPropertiesProducer(){
         this.kafkaProperties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER_PORT);
-        this.kafkaProperties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KAFKA_SERIALIZER_CLASS_CONFIG);
-        this.kafkaProperties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KAFKA_SERIALIZER_CLASS_CONFIG);
+        this.kafkaProperties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KAFKA_SERIALIZER_STRING_CLASS_CONFIG);
+        this.kafkaProperties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KAFKA_SERIALIZER_GSON_CLASS_CONFIG);
     }
 
     public void createKafkaPropertiesConsumer(){
