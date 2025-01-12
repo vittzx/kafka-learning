@@ -6,15 +6,17 @@ import java.util.concurrent.ExecutionException;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.example.domain.entities.Order;
 import org.example.utils.KafkaProperties;
 
 import static org.example.utils.UNIFORM_STRING.EMAIL_TOPPIC_NAME;
 import static org.example.utils.UNIFORM_STRING.FRAUDE_TOPPIC_NAME;
 
 
-public class KafkaMessageService {
+public class KafkaMessageService<T> {
 
-    private final KafkaProducer<String, String> kafkaProducer;
+    private final KafkaProducer<String, T> kafkaProducer;
+    private final String TOPPIC_NAME;
     private Callback callback = (data, ex) -> {
         if(ex != null){
             System.out.println(ex.getMessage());
@@ -23,45 +25,20 @@ public class KafkaMessageService {
     };
 
 
-    public KafkaMessageService(){
+    public KafkaMessageService(String topicName){
         KafkaProperties kafkaProperties = new KafkaProperties();
         kafkaProperties.createKafkaPropertiesProducer();
         this.kafkaProducer = new KafkaProducer<>(kafkaProperties.getProperties());
+        this.TOPPIC_NAME = topicName;
     }
 
 
-    public void sendMessage(String message){
-        try {
-            String key = sendMessageFraude(message);
-            sendMessageEmail("Thank you! Your order [ " + message  + " ] is being processed!", key);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public String sendMessageFraude(String message) throws ExecutionException, InterruptedException {
-        System.out.println("STARTING SENDING FRAUDE MESSAGE  TO TOPPIC: " + FRAUDE_TOPPIC_NAME + " ,MESSAGE: " + message);
-        var key = UUID.randomUUID().toString();
-        var value = key + "," + message;
+    public void sendMessage(String key, T message) throws ExecutionException, InterruptedException{
+        System.out.println("STARTING SENDING MESSAGE  TO TOPPIC: " + FRAUDE_TOPPIC_NAME + " ,MESSAGE: " + message.toString());
         System.out.println("KEY: " + key);
-        var fraudeRecord = new ProducerRecord<>(FRAUDE_TOPPIC_NAME,key, value);
-        kafkaProducer.send(fraudeRecord, callback).get();
-        System.out.println("FINISHING SENDING FRAUDE MESSAGE TO TOPPIC: " + FRAUDE_TOPPIC_NAME + " ,MESSAGE: " + message);
-        return key;
+        var record = new ProducerRecord<>(TOPPIC_NAME,key, message);
+        kafkaProducer.send(record, callback).get();
+        System.out.println("FINISHING SENDING MESSAGE TO TOPPIC: " + FRAUDE_TOPPIC_NAME + " ,MESSAGE: " + message.toString());
     }
-
-
-    public void sendMessageEmail(String message, String key) throws ExecutionException, InterruptedException{
-        System.out.println("STARTING SENDING FRAUDE MESSAGE  TO TOPPIC: " + EMAIL_TOPPIC_NAME + " ,MESSAGE: " + message);
-
-        var emailRecord = new ProducerRecord<>(EMAIL_TOPPIC_NAME, key,message);
-        kafkaProducer.send(emailRecord, callback).get();
-
-        System.out.println("FINISHING SENDING FRAUDE MESSAGE  TO TOPPIC: " + EMAIL_TOPPIC_NAME + " ,MESSAGE: " + message);
-    }
-
 
 }
