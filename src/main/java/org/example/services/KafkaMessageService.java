@@ -1,5 +1,6 @@
 package org.example.services;
 
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.kafka.clients.producer.Callback;
@@ -31,8 +32,8 @@ public class KafkaMessageService {
 
     public void sendMessage(String message){
         try {
-            sendMessageFraude(message);
-            sendMessageEmail("Thank you! Your order [ " + message  + " ] is being processed!");
+            String key = sendMessageFraude(message);
+            sendMessageEmail("Thank you! Your order [ " + message  + " ] is being processed!", key);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
@@ -41,18 +42,22 @@ public class KafkaMessageService {
     }
 
 
-    public void sendMessageFraude(String message) throws ExecutionException, InterruptedException {
+    public String sendMessageFraude(String message) throws ExecutionException, InterruptedException {
         System.out.println("STARTING SENDING FRAUDE MESSAGE  TO TOPPIC: " + FRAUDE_TOPPIC_NAME + " ,MESSAGE: " + message);
-        var fraudeRecord = new ProducerRecord<>(FRAUDE_TOPPIC_NAME,message,message);
+        var key = UUID.randomUUID().toString();
+        var value = key + "," + message;
+        System.out.println("KEY: " + key);
+        var fraudeRecord = new ProducerRecord<>(FRAUDE_TOPPIC_NAME,key, value);
         kafkaProducer.send(fraudeRecord, callback).get();
         System.out.println("FINISHING SENDING FRAUDE MESSAGE TO TOPPIC: " + FRAUDE_TOPPIC_NAME + " ,MESSAGE: " + message);
+        return key;
     }
 
 
-    public void sendMessageEmail(String message) throws ExecutionException, InterruptedException{
+    public void sendMessageEmail(String message, String key) throws ExecutionException, InterruptedException{
         System.out.println("STARTING SENDING FRAUDE MESSAGE  TO TOPPIC: " + EMAIL_TOPPIC_NAME + " ,MESSAGE: " + message);
 
-        var emailRecord = new ProducerRecord<>(EMAIL_TOPPIC_NAME, message,message);
+        var emailRecord = new ProducerRecord<>(EMAIL_TOPPIC_NAME, key,message);
         kafkaProducer.send(emailRecord, callback).get();
 
         System.out.println("FINISHING SENDING FRAUDE MESSAGE  TO TOPPIC: " + EMAIL_TOPPIC_NAME + " ,MESSAGE: " + message);

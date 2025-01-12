@@ -27,6 +27,7 @@ public class KafkaProperties {
         this.kafkaProperties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER_PORT);
         this.kafkaProperties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, KAFKA_DESERIALIZER_CLASS_CONFIG);
         this.kafkaProperties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KAFKA_DESERIALIZER_CLASS_CONFIG);
+        this.kafkaProperties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG,"1");
     }
 
     public void add_properties(Object object_propertie, Object propertie){
