@@ -3,14 +3,17 @@ package org.example.services.consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.example.domain.interfaces.KafkaConsumerInterface;
 import org.example.utils.KafkaProperties;
 
+import java.io.Closeable;
 import java.time.Duration;
 import java.util.Collections;
+import java.util.UUID;
 
 import static org.example.utils.UNIFORM_STRING.FRAUDE_TOPPIC_NAME;
 
-public class KafkaConsumerFraudeService {
+public class KafkaConsumerFraudeService implements Closeable, KafkaConsumerInterface<String> {
 
     private final KafkaConsumer<String, String> consumer;
 
@@ -18,6 +21,7 @@ public class KafkaConsumerFraudeService {
         KafkaProperties kafkaProperties = new KafkaProperties();
         kafkaProperties.createKafkaPropertiesConsumer();
         kafkaProperties.add_properties(ConsumerConfig.GROUP_ID_CONFIG, KafkaConsumerFraudeService.class.getSimpleName());
+        kafkaProperties.add_properties(ConsumerConfig.CLIENT_ID_CONFIG, KafkaConsumerFraudeService.class.getSimpleName() + "_" + UUID.randomUUID().toString());
         this.consumer = new KafkaConsumer<>(kafkaProperties.getProperties());
     }
 
@@ -30,7 +34,7 @@ public class KafkaConsumerFraudeService {
         System.out.println("FINISHING CONSUMER TOPIC " + topicName + " MESSAGES");
     }
 
-    private void analizeMessages(){
+    public void analizeMessages(){
         boolean condition = true;
         // int count = 0;
         while (condition) {
@@ -60,6 +64,7 @@ public class KafkaConsumerFraudeService {
     }
 
 
+
     public static void main(String[] args){
         final KafkaConsumerFraudeService kafkaConsumerService = new KafkaConsumerFraudeService();
         System.out.println("KAFKA CONSUMER FRAUDE CONTROLLER START");
@@ -67,4 +72,8 @@ public class KafkaConsumerFraudeService {
         System.out.println("KAFKA CONSUMER FRAUDE CONTROLLER FINISHED");
     }
 
+    @Override
+    public void close() {
+        consumer.close();
+    }
 }

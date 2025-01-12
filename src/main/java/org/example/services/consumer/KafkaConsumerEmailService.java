@@ -3,14 +3,16 @@
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.example.domain.interfaces.KafkaConsumerInterface;
 import org.example.utils.KafkaProperties;
 
+import java.io.Closeable;
 import java.time.Duration;
 import java.util.Collections;
 
 import static org.example.utils.UNIFORM_STRING.EMAIL_TOPPIC_NAME;
 
-public class KafkaConsumerEmailService {
+public class KafkaConsumerEmailService implements Closeable, KafkaConsumerInterface<String> {
 
     private final KafkaConsumer<String, String> consumer;
 
@@ -30,7 +32,7 @@ public class KafkaConsumerEmailService {
         System.out.println("FINISHING CONSUMER TOPIC " + topicName + " MESSAGES");
     }
 
-    private void analizeMessages(){
+    public void analizeMessages(){
         boolean condition = true;
         // int count = 0;
         while (condition) {
@@ -61,6 +63,11 @@ public class KafkaConsumerEmailService {
         }
     }
 
+
+    @Override
+    public void close() {
+        consumer.close();
+    }
 
     public static void main(String[] args){
         final KafkaConsumerEmailService kafkaConsumerService = new KafkaConsumerEmailService();
