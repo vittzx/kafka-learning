@@ -1,0 +1,17 @@
+package org.example.domain.entities;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+public class Order {
+    private String userId, orderId;
+    private BigDecimal amount;
+    private final LocalDate messageTime;
+
+    public Order(String userId, String orderId, BigDecimal amount) {
+        this.userId = userId;
+        this.orderId = orderId;
+        this.amount = amount;
+        this.messageTime = LocalDate.now();
+    }
+}
