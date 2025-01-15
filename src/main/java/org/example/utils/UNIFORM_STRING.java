@@ -2,6 +2,8 @@ package org.example.utils;
 
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.example.utils.Gson.GsonDeserializer;
+import org.example.utils.Gson.GsonSerializer;
 
 public class UNIFORM_STRING {
     public static final String KAFKA_SERVER_PORT = "127.0.0.1:9092";

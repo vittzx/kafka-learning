@@ -1,16 +1,11 @@
         package org.example.services.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.example.utils.KafkaProperties;
+import org.example.services.KafkaConsumerService;
 
-import java.time.Duration;
-import java.util.Collections;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static org.example.utils.UNIFORM_STRING.EMAIL_TOPPIC_NAME;
 import static org.example.utils.UNIFORM_STRING.KAFKA_DESERIALIZER_STRING_CLASS_CONFIG;
 
         public class LogService {

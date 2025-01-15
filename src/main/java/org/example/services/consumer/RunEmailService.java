@@ -1,5 +1,7 @@
 package org.example.services.consumer;
 
+import org.example.services.KafkaConsumerService;
+
 import static org.example.utils.UNIFORM_STRING.EMAIL_TOPPIC_NAME;
 
 public class RunEmailService {

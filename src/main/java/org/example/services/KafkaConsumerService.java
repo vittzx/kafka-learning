@@ -1,11 +1,11 @@
-package org.example.services.consumer;
+package org.example.services;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.example.domain.entities.Order;
 import org.example.domain.interfaces.KafkaConsumerInterface;
-import org.example.utils.GsonDeserializer;
+import org.example.utils.Gson.GsonDeserializer;
 import org.example.utils.KafkaProperties;
 
 import java.io.Closeable;

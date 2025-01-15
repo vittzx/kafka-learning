@@ -1,17 +1,11 @@
 package org.example.services;
 
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.example.domain.entities.Order;
-import org.example.utils.GsonDeserializer;
 import org.example.utils.KafkaProperties;
-
-import static org.example.utils.UNIFORM_STRING.EMAIL_TOPPIC_NAME;
-import static org.example.utils.UNIFORM_STRING.FRAUDE_TOPPIC_NAME;
 
 
 public class KafkaMessageService<T> {
