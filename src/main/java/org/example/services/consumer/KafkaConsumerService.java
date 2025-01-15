@@ -13,9 +13,9 @@ import java.util.UUID;
 
 import static org.example.utils.UNIFORM_STRING.FRAUDE_TOPPIC_NAME;
 
-public class KafkaConsumerFraudeService implements Closeable, KafkaConsumerInterface<String> {
+public class KafkaConsumerFraudeService<T> implements Closeable, KafkaConsumerInterface<T> {
 
-    private final KafkaConsumer<String, String> consumer;
+    private final KafkaConsumer<String, T> consumer;
 
     public KafkaConsumerFraudeService(){
         KafkaProperties kafkaProperties = new KafkaProperties();
@@ -25,6 +25,7 @@ public class KafkaConsumerFraudeService implements Closeable, KafkaConsumerInter
         this.consumer = new KafkaConsumer<>(kafkaProperties.getProperties());
     }
 
+    @Override
     public void consumerTopic(String topicName){
         System.out.println("STARTING CONSUMER TOPIC " + topicName + " MESSAGES");
         consumer.subscribe(Collections.singletonList(topicName));
@@ -38,7 +39,7 @@ public class KafkaConsumerFraudeService implements Closeable, KafkaConsumerInter
         boolean condition = true;
         // int count = 0;
         while (condition) {
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(5000));
+            ConsumerRecords<String, T> records = consumer.poll(Duration.ofMillis(5000));
 
             if (records.isEmpty()) {
                 System.out.println("None message found. Continues");
@@ -62,7 +63,6 @@ public class KafkaConsumerFraudeService implements Closeable, KafkaConsumerInter
             // }
         }
     }
-
 
 
     public static void main(String[] args){

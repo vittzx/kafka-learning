@@ -4,7 +4,6 @@ import org.example.domain.entities.Order;
 import org.example.services.KafkaMessageService;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 

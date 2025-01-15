@@ -34,7 +34,7 @@ import static org.example.utils.UNIFORM_STRING.EMAIL_TOPPIC_NAME;
             private void analizeMessages(){
                 boolean condition = true;
                 while (condition) {
-                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(2500));
+                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
 
                     if (records.isEmpty()) {
                         System.out.println("None log message found. Continues");
